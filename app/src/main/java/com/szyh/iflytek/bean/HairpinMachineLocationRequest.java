@@ -7,7 +7,18 @@ import com.szyh.iflytek.define.MessageDefine;
  */
 
 public class HairpinMachineLocationRequest extends Message {
+
+    private int location;
+
     public HairpinMachineLocationRequest() {
         setCmd(MessageDefine.RequestCmd.HAIRPIN_MACHINE_LOCATION);
+    }
+
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
     }
 }

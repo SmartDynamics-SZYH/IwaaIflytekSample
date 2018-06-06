@@ -1,6 +1,7 @@
 package com.szyh.iflytek.websocket;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
@@ -39,6 +40,8 @@ public class IflytekWebSocketHelper {
     private IflytekWebSocketClient webSocketClient;
 
     private List<HighBeatRodPhotoListener> highBeatRodPhotoListeners = new ArrayList<>();
+
+    private List<WebSocketStatusListener> webSocketStatusListeners = new ArrayList<>();
 
     private IflytekWebSocketHelper() {
 
@@ -93,6 +96,15 @@ public class IflytekWebSocketHelper {
         highBeatRodPhotoListeners.remove(highBeatRodPhotoListener);
     }
 
+
+    public void addWebSocketStatusListener(WebSocketStatusListener webSocketStatusListener) {
+        webSocketStatusListeners.add(webSocketStatusListener);
+    }
+
+    public void removeWebSocketStatusListener(WebSocketStatusListener webSocketStatusListener) {
+        webSocketStatusListeners.remove(webSocketStatusListener);
+    }
+
     private static final AtomicInteger ID_ATOMIC = new AtomicInteger();
 
     private Hashtable<Integer, WebSocketCallback> webSocketCallbackHashtable = new Hashtable<>();
@@ -121,7 +133,10 @@ public class IflytekWebSocketHelper {
 
         @Override
         public void onOpen(ServerHandshake serverHandshake) {
-
+            Log.e(TAG, "onOpen: ");
+            for (WebSocketStatusListener wss : webSocketStatusListeners) {
+                wss.onOpen();
+            }
         }
 
         @Override
@@ -166,12 +181,19 @@ public class IflytekWebSocketHelper {
 
         @Override
         public void onClose(int i, String s, boolean b) {
-
+            Log.e(TAG, "onClose: ");
+            for (WebSocketStatusListener wss : webSocketStatusListeners) {
+                wss.onClose();
+            }
         }
 
         @Override
         public void onError(Exception e) {
-
+            e.printStackTrace();
+            Log.e(TAG, "onError: " + e.getMessage());
+            for (WebSocketStatusListener wss : webSocketStatusListeners) {
+                wss.onError();
+            }
         }
     }
 }

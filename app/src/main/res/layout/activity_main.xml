@@ -8,68 +8,115 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp">
+        android:padding="20dp">
 
+        <TextView
+            android:id="@+id/id_info_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#4370b3"
+            android:gravity="center"
+            android:text="信息显示"
+            android:textColor="#cdda75"/>
 
-        <Button
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="connect"
-            android:text="连接WebSocket"/>
+            android:text="工控机连接"/>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="disconnect"
-            android:text="断开WebSocket"/>
+            android:orientation="horizontal">
 
-        <Button
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="connect"
+                android:text="连接WebSocket"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="disconnect"
+                android:text="断开WebSocket"/>
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="high_beat_rod_switch"
-            android:text="高拍杆--开关"/>
+            android:text="高拍杆"/>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="high_beat_rod_focus"
-            android:text="高拍杆--焦距"/>
+            android:orientation="horizontal">
 
-        <Button
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="high_beat_rod_switch"
+                android:text="高拍杆--开关"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="high_beat_rod_focus"
+                android:text="高拍杆--焦距"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="high_beat_rod_snap"
+                android:text="高拍杆--抓拍"/>
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="high_beat_rod_snap"
-            android:text="高拍杆--抓拍"/>
+            android:text="发卡机"/>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="hairpin_machine_status"
-            android:text="发卡机--获取设备状态"/>
+            android:orientation="horizontal">
 
-        <Button
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_status"
+                android:text="发卡机--获取设备状态"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_front_read_card"
+                android:text="发卡机--从前端进卡并读卡"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_back_read_card"
+                android:text="发卡机--从后端进卡并读卡"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="hairpin_machine_front_read_card"
-            android:text="发卡机--从前端进卡并读卡"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="hairpin_machine_back_read_card"
-            android:text="发卡机--从后端进卡并读卡"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_location"
+                android:text="发卡机--移动卡位置"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="hairpin_machine_location"
-            android:text="发卡机--移动卡位置"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_read_card"
+                android:text="发卡机--读卡"/>
+        </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="hairpin_machine_read_card"
-            android:text="发卡机--读卡"/>
     </LinearLayout>
 </ScrollView>

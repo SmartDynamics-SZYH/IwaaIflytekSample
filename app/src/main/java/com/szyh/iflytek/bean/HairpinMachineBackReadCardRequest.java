@@ -7,6 +7,7 @@ import com.szyh.iflytek.define.MessageDefine;
  */
 
 public class HairpinMachineBackReadCardRequest extends Message {
+
     public HairpinMachineBackReadCardRequest() {
         setCmd(MessageDefine.RequestCmd.HAIRPIN_MACHINE_BACK_READ_CARD);
     }

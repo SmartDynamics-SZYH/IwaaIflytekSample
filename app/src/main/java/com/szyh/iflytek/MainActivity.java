@@ -2,8 +2,12 @@ package com.szyh.iflytek;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.View;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
 import com.szyh.iflytek.bean.HairpinMachineBackReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineFrontReadCardRequest;
@@ -22,14 +26,39 @@ import com.szyh.iflytek.define.MessageDefine;
 import com.szyh.iflytek.websocket.HighBeatRodPhotoListener;
 import com.szyh.iflytek.websocket.IflytekWebSocketHelper;
 import com.szyh.iflytek.websocket.WebSocketCallback;
+import com.szyh.iflytek.websocket.WebSocketStatusListener;
 
-public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoListener {
+public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoListener, WebSocketStatusListener {
+
+    TextView infoText;
+
+    String[] locations = new String[]{
+            "卡在前端不持卡位置",
+            "卡在前端持卡位",
+            "卡在射频位置",
+            "卡在IC位置",
+            "卡在后端持卡位",
+            "机内无卡",
+            "卡不再标准位置",
+            "卡在重读卡位",
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        infoText = findViewById(R.id.id_info_text);
         IflytekWebSocketHelper.getInstance().addHighBeatRodPhotoListener(this);
+        IflytekWebSocketHelper.getInstance().addWebSocketStatusListener(this);
+    }
+
+    private void setInfoText(final String text) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                infoText.setText(text);
+            }
+        });
     }
 
     /**
@@ -64,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
             public void onWebSocketCallback(Message message) {
                 if (message.getCmd() == MessageDefine.ResponseCmd.HIGH_BEAT_ROD_SWITCH) {
                     DefaultResponse defaultResponse = (DefaultResponse) message;
-                    //TODO
+                    setInfoText("高拍杆打开成功");
                 }
             }
         });
@@ -84,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
             public void onWebSocketCallback(Message message) {
                 if (message.getCmd() == MessageDefine.ResponseCmd.HIGH_BEAT_ROD_FOCUS) {
                     DefaultResponse defaultResponse = (DefaultResponse) message;
-                    //TODO
+                    setInfoText("高拍杆焦距放大");
                 }
             }
         });
@@ -104,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                     HighBeatRodPhotoResponse photoResponse = (HighBeatRodPhotoResponse) message;
                     String photo = photoResponse.getPhoto();//抓拍图片的URL地址
                     //TODO
+                    setInfoText("高拍杆抓拍成功：url地址是" + photo);
                 }
             }
         });
@@ -125,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
         super.onStop();
         if (isFinishing()) {
             IflytekWebSocketHelper.getInstance().removeHighBeatRodPhotoListener(this);
+            IflytekWebSocketHelper.getInstance().removeWebSocketStatusListener(this);
         }
     }
 
@@ -142,6 +173,12 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                     HairpinMachineStatusResponse statusResponse = (HairpinMachineStatusResponse) message;
                     int status = statusResponse.getStatus();
                     //TODO
+                    int index = status - 0x30;
+                    index = index > 0 ? index : 0;
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("发卡机-获取设备状态：\n");
+                    sb.append(locations[index]);
+                    setInfoText(sb.toString());
                 }
             }
         });
@@ -160,6 +197,12 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                 if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_FRONT_READ_CARD) {
                     HairpinMachineReadCardResponse readCardResponse = (HairpinMachineReadCardResponse) message;
                     //TODO
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("发卡机-从前端进卡并读卡：\n");
+                    sb.append("轨道1：" + readCardResponse.getCardNo1() + "\n");
+                    sb.append("轨道2：" + readCardResponse.getCardNo2() + "\n");
+                    sb.append("轨道3：" + readCardResponse.getCardNo3() + "\n");
+                    setInfoText(sb.toString());
                 }
             }
         });
@@ -176,6 +219,12 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                 if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_BACK_READ_CARD) {
                     HairpinMachineReadCardResponse readCardResponse = (HairpinMachineReadCardResponse) message;
                     //TODO
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("发卡机-从后端进卡并读卡：\n");
+                    sb.append("轨道1：" + readCardResponse.getCardNo1() + "\n");
+                    sb.append("轨道2：" + readCardResponse.getCardNo2() + "\n");
+                    sb.append("轨道3：" + readCardResponse.getCardNo3() + "\n");
+                    setInfoText(sb.toString());
                 }
             }
         });
@@ -188,12 +237,14 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
      */
     public void hairpin_machine_location(View view) {
         HairpinMachineLocationRequest locationRequest = new HairpinMachineLocationRequest();
+        locationRequest.setLocation(0x32);
         IflytekWebSocketHelper.getInstance().sendMessage(locationRequest, new WebSocketCallback() {
             @Override
             public void onWebSocketCallback(Message message) {
                 if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_LOCATION) {
                     HairpinMachineLocationResponse locationResponse = (HairpinMachineLocationResponse) message;
                     //TODO
+                    setInfoText(" 移动卡到前端持卡位  已打开，请送卡入卡槽！");
                 }
             }
         });
@@ -212,8 +263,31 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                 if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_READ_CARD) {
                     HairpinMachineReadCardResponse readCardResponse = (HairpinMachineReadCardResponse) message;
                     //TODO
+                    Log.e("MainActivity", "onWebSocketCallback: " + JSON.toJSONString(readCardResponse));
+                    //TODO
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("发卡机-读卡信息：\n");
+                    sb.append("轨道1：" + readCardResponse.getCardNo1() + "\n");
+                    sb.append("轨道2：" + readCardResponse.getCardNo2() + "\n");
+                    sb.append("轨道3：" + readCardResponse.getCardNo3() + "\n");
+                    setInfoText(sb.toString());
                 }
             }
         });
+    }
+
+    @Override
+    public void onOpen() {
+        setInfoText("与工控机连接成功！");
+    }
+
+    @Override
+    public void onClose() {
+        setInfoText("与工控机连接失败！");
+    }
+
+    @Override
+    public void onError() {
+        setInfoText("与工控机连接出错！");
     }
 }

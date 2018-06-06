@@ -1,7 +1,5 @@
 package com.szyh.iflytek.bean;
 
-import com.szyh.iflytek.define.MessageDefine;
-
 /**
  * Created by Administrator on 2018/5/16.
  */
@@ -9,8 +7,8 @@ import com.szyh.iflytek.define.MessageDefine;
 public class HairpinMachineStatusResponse extends Message {
 
     /**
-     * 0x30卡在前端不持卡位置
-     * 0x31卡在前端持卡位
+     * 0x30 卡在前端不持卡位置
+     * 0x31 卡在前端持卡位
      * 0x32 卡在射频位置
      * 0x33 卡在IC位置
      * 0x34 卡在后端持卡位
