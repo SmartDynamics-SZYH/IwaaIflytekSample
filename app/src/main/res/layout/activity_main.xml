@@ -98,6 +98,12 @@
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_back_read_card"
                 android:text="发卡机--从后端进卡并读卡"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_reset"
+                android:text="发卡机--复位"/>
         </LinearLayout>
 
         <LinearLayout

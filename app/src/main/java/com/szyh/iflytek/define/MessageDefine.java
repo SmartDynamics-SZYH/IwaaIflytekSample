@@ -23,6 +23,8 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_LOCATION = 0xE014;
         //发卡机-读卡
         public static final int HAIRPIN_MACHINE_READ_CARD = 0xE015;
+        //发卡机-复位
+        public static final int HAIRPIN_MACHINE_RESET = 0xE016;
     }
 
     public class ResponseCmd {
@@ -45,5 +47,7 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_LOCATION = 0xF014;
         //发卡机-读卡
         public static final int HAIRPIN_MACHINE_READ_CARD = 0xF015;
+        //发卡机-复位
+        public static final int HAIRPIN_MACHINE_RESET = 0xF016;
     }
 }

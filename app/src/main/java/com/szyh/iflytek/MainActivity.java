@@ -15,6 +15,7 @@ import com.szyh.iflytek.bean.HairpinMachineLocationRequest;
 import com.szyh.iflytek.bean.HairpinMachineLocationResponse;
 import com.szyh.iflytek.bean.HairpinMachineReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineReadCardResponse;
+import com.szyh.iflytek.bean.HairpinMachineResetRequest;
 import com.szyh.iflytek.bean.HairpinMachineStatusRequest;
 import com.szyh.iflytek.bean.HairpinMachineStatusResponse;
 import com.szyh.iflytek.bean.HighBeatRodFocusRequest;
@@ -270,6 +271,29 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                     sb.append("轨道1：" + readCardResponse.getCardNo1() + "\n");
                     sb.append("轨道2：" + readCardResponse.getCardNo2() + "\n");
                     sb.append("轨道3：" + readCardResponse.getCardNo3() + "\n");
+                    setInfoText(sb.toString());
+                }
+            }
+        });
+    }
+
+    public void hairpin_machine_reset(View view) {
+        /**
+         * 复位动作
+         * 0x30 复位 不移动卡片
+         * 0x31 复位 卡片到前端不持卡位
+         * 0x32 复位 从后端弹出卡
+         * 0x33 复位 移动卡到前端持卡位
+         */
+        final HairpinMachineResetRequest resetRequest = new HairpinMachineResetRequest(0x30);
+        IflytekWebSocketHelper.getInstance().sendMessage(resetRequest, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_RESET) {
+                    DefaultResponse defaultResponse = (DefaultResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback: " + JSON.toJSONString(defaultResponse));
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("发卡机-复位成功(不移动卡片)\n");
                     setInfoText(sb.toString());
                 }
             }
