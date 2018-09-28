@@ -147,6 +147,7 @@ public class IflytekWebSocketHelper {
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_SWITCH:
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_FOCUS:
                 case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_RESET:
+                case MessageDefine.ResponseCmd.QR_CODE_PRINT:
                     message = JSON.parseObject(result, DefaultResponse.class);
                     break;
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_SNAP:

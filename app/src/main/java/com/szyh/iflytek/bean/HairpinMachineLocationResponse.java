@@ -4,7 +4,7 @@ package com.szyh.iflytek.bean;
  * Created by Administrator on 2018/5/16.
  */
 
-public class HairpinMachineLocationResponse extends Message {
+public class HairpinMachineLocationResponse extends DefaultResponse {
 
     /**
      * 0X30 移动卡到读卡器

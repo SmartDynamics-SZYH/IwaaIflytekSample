@@ -23,6 +23,7 @@ import com.szyh.iflytek.bean.HighBeatRodSnapRequest;
 import com.szyh.iflytek.bean.HighBeatRodSwitchRequest;
 import com.szyh.iflytek.bean.HighBeatRodPhotoResponse;
 import com.szyh.iflytek.bean.Message;
+import com.szyh.iflytek.bean.QRCodePrintRequest;
 import com.szyh.iflytek.define.MessageDefine;
 import com.szyh.iflytek.websocket.HighBeatRodPhotoListener;
 import com.szyh.iflytek.websocket.IflytekWebSocketHelper;
@@ -295,6 +296,24 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                     StringBuffer sb = new StringBuffer();
                     sb.append("发卡机-复位成功(不移动卡片)\n");
                     setInfoText(sb.toString());
+                }
+            }
+        });
+    }
+
+    public void print_qr_code(View view) {
+        QRCodePrintRequest qrCodePrintRequest = new QRCodePrintRequest("二维码", (byte) 10, 2, 3, 4);
+        IflytekWebSocketHelper.getInstance().sendMessage(qrCodePrintRequest, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getCmd() == MessageDefine.ResponseCmd.QR_CODE_PRINT) {
+                    DefaultResponse defaultResponse = (DefaultResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback print_qr_code: " + JSON.toJSONString(defaultResponse));
+                    if (defaultResponse.getResponseCode() > 0) {
+                        setInfoText("打印成功！");
+                    } else {
+                        setInfoText("打印失败！");
+                    }
                 }
             }
         });

@@ -4,7 +4,7 @@ package com.szyh.iflytek.bean;
  * Created by Administrator on 2018/5/16.
  */
 
-public class HairpinMachineStatusResponse extends Message {
+public class HairpinMachineStatusResponse extends DefaultResponse {
 
     /**
      * 0x30 卡在前端不持卡位置
