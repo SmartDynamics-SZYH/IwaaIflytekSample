@@ -36,6 +36,7 @@ public class QRCodePrintRequest extends Message {
     }
 
     public QRCodePrintRequest(String text, byte darkness, double dXPos, double dYPos, double qrSize) {
+        this();
         this.text = text;
         this.darkness = darkness;
         this.dXPos = dXPos;
