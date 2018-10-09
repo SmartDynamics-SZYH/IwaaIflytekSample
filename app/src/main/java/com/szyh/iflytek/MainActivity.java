@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
+import com.szyh.iflytek.bean.FilePrintRequest;
 import com.szyh.iflytek.bean.HairpinMachineBackReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineFrontReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineLocationRequest;
@@ -278,6 +279,11 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
         });
     }
 
+    /**
+     * 发卡机复位
+     *
+     * @param view
+     */
     public void hairpin_machine_reset(View view) {
         /**
          * 复位动作
@@ -301,6 +307,11 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
         });
     }
 
+    /**
+     * 打印二维码
+     *
+     * @param view
+     */
     public void print_qr_code(View view) {
         QRCodePrintRequest qrCodePrintRequest = new QRCodePrintRequest("二维码", (byte) 10, 2, 3, 4);
         IflytekWebSocketHelper.getInstance().sendMessage(qrCodePrintRequest, new WebSocketCallback() {
@@ -309,6 +320,29 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                 if (message.getCmd() == MessageDefine.ResponseCmd.QR_CODE_PRINT) {
                     DefaultResponse defaultResponse = (DefaultResponse) message;
                     Log.e("MainActivity", "onWebSocketCallback print_qr_code: " + JSON.toJSONString(defaultResponse));
+                    if (defaultResponse.getResponseCode() > 0) {
+                        setInfoText("打印成功！");
+                    } else {
+                        setInfoText("打印失败！");
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 打印文件
+     *
+     * @param view
+     */
+    public void print_file(View view) {
+        FilePrintRequest filePrintRequest = new FilePrintRequest("文本内容", "文件名称");
+        IflytekWebSocketHelper.getInstance().sendMessage(filePrintRequest, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getCmd() == MessageDefine.ResponseCmd.FILE_PRINT) {
+                    DefaultResponse defaultResponse = (DefaultResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback print_file: " + JSON.toJSONString(defaultResponse));
                     if (defaultResponse.getResponseCode() > 0) {
                         setInfoText("打印成功！");
                     } else {

@@ -27,6 +27,8 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_RESET = 0xE016;
         //打印二维码
         public static final int QR_CODE_PRINT = 0xE021;
+        //打印文件
+        public static final int FILE_PRINT = 0xE031;
     }
 
     public class ResponseCmd {
@@ -53,5 +55,7 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_RESET = 0xF016;
         //打印二维码
         public static final int QR_CODE_PRINT = 0xF021;
+        //打印文件
+        public static final int FILE_PRINT = 0xF031;
     }
 }

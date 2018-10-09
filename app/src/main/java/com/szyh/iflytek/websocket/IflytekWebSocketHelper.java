@@ -20,8 +20,10 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static android.content.ContentValues.TAG;
@@ -39,9 +41,9 @@ public class IflytekWebSocketHelper {
 
     private IflytekWebSocketClient webSocketClient;
 
-    private List<HighBeatRodPhotoListener> highBeatRodPhotoListeners = new ArrayList<>();
+    private List<HighBeatRodPhotoListener> highBeatRodPhotoListeners = new Vector<>();
 
-    private List<WebSocketStatusListener> webSocketStatusListeners = new ArrayList<>();
+    private List<WebSocketStatusListener> webSocketStatusListeners = new Vector<>();
 
     private IflytekWebSocketHelper() {
 
@@ -148,6 +150,7 @@ public class IflytekWebSocketHelper {
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_FOCUS:
                 case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_RESET:
                 case MessageDefine.ResponseCmd.QR_CODE_PRINT:
+                case MessageDefine.ResponseCmd.FILE_PRINT:
                     message = JSON.parseObject(result, DefaultResponse.class);
                     break;
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_SNAP:
