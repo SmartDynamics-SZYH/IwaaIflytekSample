@@ -17,6 +17,8 @@ import com.szyh.iflytek.bean.HairpinMachineLocationResponse;
 import com.szyh.iflytek.bean.HairpinMachineReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineReadCardResponse;
 import com.szyh.iflytek.bean.HairpinMachineResetRequest;
+import com.szyh.iflytek.bean.HairpinMachineSensorStatusRequest;
+import com.szyh.iflytek.bean.HairpinMachineSensorStatusResponse;
 import com.szyh.iflytek.bean.HairpinMachineStatusRequest;
 import com.szyh.iflytek.bean.HairpinMachineStatusResponse;
 import com.szyh.iflytek.bean.HighBeatRodFocusRequest;
@@ -302,6 +304,24 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
                     StringBuffer sb = new StringBuffer();
                     sb.append("发卡机-复位成功(不移动卡片)\n");
                     setInfoText(sb.toString());
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取传感器状态
+     *
+     * @param view
+     */
+    public void hairpin_machine_sensor_status(View view) {
+        HairpinMachineSensorStatusRequest hmssr = new HairpinMachineSensorStatusRequest();
+        IflytekWebSocketHelper.getInstance().sendMessage(hmssr, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getCmd() == MessageDefine.ResponseCmd.HAIRPIN_MACHINE_SENSOR_STATUS) {
+                    HairpinMachineSensorStatusResponse res = (HairpinMachineSensorStatusResponse) message;
+                    // TODO: 2018/11/8  
                 }
             }
         });

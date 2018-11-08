@@ -146,6 +146,11 @@
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_read_card"
                 android:text="发卡机--读卡"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hairpin_machine_sensor_status"
+                android:text="发卡机--传感器状态"/>
         </LinearLayout>
 
     </LinearLayout>

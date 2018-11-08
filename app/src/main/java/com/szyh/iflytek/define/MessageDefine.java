@@ -25,6 +25,8 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_READ_CARD = 0xE015;
         //发卡机-复位
         public static final int HAIRPIN_MACHINE_RESET = 0xE016;
+        //发卡机传感器状态
+        public static final int HAIRPIN_MACHINE_SENSOR_STATUS = 0xE017;
         //打印二维码
         public static final int QR_CODE_PRINT = 0xE021;
         //打印文件
@@ -53,6 +55,8 @@ public class MessageDefine {
         public static final int HAIRPIN_MACHINE_READ_CARD = 0xF015;
         //发卡机-复位
         public static final int HAIRPIN_MACHINE_RESET = 0xF016;
+        //发卡机传感器状态
+        public static final int HAIRPIN_MACHINE_SENSOR_STATUS = 0xF017;
         //打印二维码
         public static final int QR_CODE_PRINT = 0xF021;
         //打印文件

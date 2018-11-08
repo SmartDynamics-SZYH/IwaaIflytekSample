@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
 import com.szyh.iflytek.bean.HairpinMachineLocationResponse;
 import com.szyh.iflytek.bean.HairpinMachineReadCardResponse;
+import com.szyh.iflytek.bean.HairpinMachineSensorStatusResponse;
 import com.szyh.iflytek.bean.HairpinMachineStatusResponse;
 import com.szyh.iflytek.bean.HighBeatRodPhotoResponse;
 import com.szyh.iflytek.bean.Message;
@@ -174,6 +175,9 @@ public class IflytekWebSocketHelper {
                     break;
                 case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_LOCATION:
                     message = JSON.parseObject(result, HairpinMachineLocationResponse.class);
+                    break;
+                case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_SENSOR_STATUS:
+                    message = JSON.parseObject(result, HairpinMachineSensorStatusResponse.class);
                     break;
             }
             if (message != null) {
