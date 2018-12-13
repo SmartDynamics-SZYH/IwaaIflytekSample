@@ -28,13 +28,15 @@ import com.szyh.iflytek.bean.HighBeatRodPhotoResponse;
 import com.szyh.iflytek.bean.Message;
 import com.szyh.iflytek.bean.QRCodePrintRequest;
 import com.szyh.iflytek.define.MessageDefine;
+import com.szyh.iflytek.websocket.ExtUploadListener;
 import com.szyh.iflytek.websocket.HighBeatRodPhotoListener;
 import com.szyh.iflytek.websocket.IflytekWebSocketHelper;
 import com.szyh.iflytek.websocket.WebSocketCallback;
 import com.szyh.iflytek.websocket.WebSocketStatusListener;
 
-public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoListener, WebSocketStatusListener {
+public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoListener, WebSocketStatusListener, ExtUploadListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     TextView infoText;
 
     String[] locations = new String[]{
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
         infoText = findViewById(R.id.id_info_text);
         IflytekWebSocketHelper.getInstance().addHighBeatRodPhotoListener(this);
         IflytekWebSocketHelper.getInstance().addWebSocketStatusListener(this);
+        IflytekWebSocketHelper.getInstance().addExtUploadListener(this);
     }
 
     private void setInfoText(final String text) {
@@ -161,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
         if (isFinishing()) {
             IflytekWebSocketHelper.getInstance().removeHighBeatRodPhotoListener(this);
             IflytekWebSocketHelper.getInstance().removeWebSocketStatusListener(this);
+            IflytekWebSocketHelper.getInstance().removeExtUploadListener(this);
         }
     }
 
@@ -386,5 +390,10 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
     @Override
     public void onError() {
         setInfoText("与工控机连接出错！");
+    }
+
+    @Override
+    public void onExtUpload(String json) {
+        Log.i(TAG, "onExtUpload: " + json);
     }
 }

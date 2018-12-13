@@ -1,10 +1,10 @@
 package com.szyh.iflytek.websocket;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
+import com.szyh.iflytek.bean.ExtUploadResponse;
 import com.szyh.iflytek.bean.HairpinMachineLocationResponse;
 import com.szyh.iflytek.bean.HairpinMachineReadCardResponse;
 import com.szyh.iflytek.bean.HairpinMachineSensorStatusResponse;
@@ -20,14 +20,10 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Administrator on 2018/5/16.
@@ -35,6 +31,8 @@ import static android.content.ContentValues.TAG;
  */
 
 public class IflytekWebSocketHelper {
+
+    private static final String TAG = "IflytekWebSocketHelper";
 
     private static final String WEB_SOCKET_URI = "ws://192.168.5.88:5000/WebSocketMessager";
 
@@ -45,6 +43,8 @@ public class IflytekWebSocketHelper {
     private List<HighBeatRodPhotoListener> highBeatRodPhotoListeners = new Vector<>();
 
     private List<WebSocketStatusListener> webSocketStatusListeners = new Vector<>();
+
+    private List<ExtUploadListener> extUploadListeners = new Vector<>();
 
     private IflytekWebSocketHelper() {
 
@@ -107,6 +107,29 @@ public class IflytekWebSocketHelper {
     public void removeWebSocketStatusListener(WebSocketStatusListener webSocketStatusListener) {
         webSocketStatusListeners.remove(webSocketStatusListener);
     }
+
+    /**
+     * 注册扩展协议类的监听器
+     *
+     * @param extUploadListener 扩展协议类监听器
+     */
+    public void addExtUploadListener(ExtUploadListener extUploadListener) {
+        if (extUploadListeners != null) {
+            extUploadListeners.add(extUploadListener);
+        }
+    }
+
+    /**
+     * 反注册扩展协议类的监听器
+     *
+     * @param extUploadListener 扩展协议类监听器
+     */
+    public void removeExtUploadListener(ExtUploadListener extUploadListener) {
+        if (extUploadListeners != null) {
+            extUploadListeners.remove(extUploadListener);
+        }
+    }
+
 
     private static final AtomicInteger ID_ATOMIC = new AtomicInteger();
 
@@ -178,6 +201,13 @@ public class IflytekWebSocketHelper {
                     break;
                 case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_SENSOR_STATUS:
                     message = JSON.parseObject(result, HairpinMachineSensorStatusResponse.class);
+                    break;
+                case MessageDefine.ResponseCmd.ROBOT_EXTEND_UPLOAD:
+                    message = JSON.parseObject(result, ExtUploadResponse.class);
+                    ExtUploadResponse extUploadResponse = (ExtUploadResponse) message;
+                    for (ExtUploadListener extUploadListener : extUploadListeners) {
+                        extUploadListener.onExtUpload(extUploadResponse.getExtUploadMsg());
+                    }
                     break;
             }
             if (message != null) {

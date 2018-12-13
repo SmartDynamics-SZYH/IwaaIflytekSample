@@ -61,5 +61,8 @@ public class MessageDefine {
         public static final int QR_CODE_PRINT = 0xF021;
         //打印文件
         public static final int FILE_PRINT = 0xF031;
+
+        public static final int ROBOT_EXTEND_UPLOAD = 0x1602;
+
     }
 }
