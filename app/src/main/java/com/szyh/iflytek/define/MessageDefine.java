@@ -31,6 +31,12 @@ public class MessageDefine {
         public static final int QR_CODE_PRINT = 0xE021;
         //打印文件
         public static final int FILE_PRINT = 0xE031;
+
+
+        ///////HD100读卡器//////////
+        public static final int FIND_READ_HD_CARD = 0xE041;
+        public static final int READ_HD_CARD = 0xE042;
+        public static final int WRITE_HD_CARD = 0xE043;
     }
 
     public class ResponseCmd {
@@ -63,6 +69,12 @@ public class MessageDefine {
         public static final int FILE_PRINT = 0xF031;
 
         public static final int ROBOT_EXTEND_UPLOAD = 0x1602;
+
+
+        ///////HD100读卡器//////////
+        public static final int FIND_READ_HD_CARD = 0xF041;
+        public static final int READ_HD_CARD = 0xF042;
+        public static final int WRITE_HD_CARD = 0xF043;
 
     }
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
 import com.szyh.iflytek.bean.FilePrintRequest;
+import com.szyh.iflytek.bean.FindAndReadHDCardRequest;
+import com.szyh.iflytek.bean.FindAndReadHDCardResponse;
 import com.szyh.iflytek.bean.HairpinMachineBackReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineFrontReadCardRequest;
 import com.szyh.iflytek.bean.HairpinMachineLocationRequest;
@@ -27,6 +29,9 @@ import com.szyh.iflytek.bean.HighBeatRodSwitchRequest;
 import com.szyh.iflytek.bean.HighBeatRodPhotoResponse;
 import com.szyh.iflytek.bean.Message;
 import com.szyh.iflytek.bean.QRCodePrintRequest;
+import com.szyh.iflytek.bean.ReadHDCardRequest;
+import com.szyh.iflytek.bean.ReadHDCardResponse;
+import com.szyh.iflytek.bean.WriteHDCardRequest;
 import com.szyh.iflytek.define.MessageDefine;
 import com.szyh.iflytek.websocket.ExtUploadListener;
 import com.szyh.iflytek.websocket.HighBeatRodPhotoListener;
@@ -395,5 +400,59 @@ public class MainActivity extends AppCompatActivity implements HighBeatRodPhotoL
     @Override
     public void onExtUpload(String json) {
         Log.i(TAG, "onExtUpload: " + json);
+    }
+
+    public void hd_find_read_card(View view) {
+        FindAndReadHDCardRequest farhdcr = new FindAndReadHDCardRequest();
+        IflytekWebSocketHelper.getInstance().sendMessage(farhdcr, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getMessageID() == MessageDefine.ResponseCmd.FIND_READ_HD_CARD) {
+                    FindAndReadHDCardResponse res = (FindAndReadHDCardResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback hd_find_read_card: " + JSON.toJSONString(res));
+                    if (res.getResponseCode() > 0) {
+                        setInfoText("HD100读卡器寻卡和读卡信息:" + res.getContent());
+                    } else {
+                        setInfoText("HD100读卡器寻卡和读卡信息失败！");
+                    }
+                }
+            }
+        });
+    }
+
+    public void hd_read_card(View view) {
+        ReadHDCardRequest readHDCardRequest = new ReadHDCardRequest((byte) 0, 100);
+        IflytekWebSocketHelper.getInstance().sendMessage(readHDCardRequest, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getMessageID() == MessageDefine.ResponseCmd.READ_HD_CARD) {
+                    ReadHDCardResponse res = (ReadHDCardResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback hd_read_card: " + JSON.toJSONString(res));
+                    if (res.getResponseCode() > 0) {
+                        setInfoText("HD100读卡器读卡信息:" + res.getContent());
+                    } else {
+                        setInfoText("HD100读卡器读卡信息失败！");
+                    }
+                }
+            }
+        });
+    }
+
+    public void hd_write_card(View view) {
+        WriteHDCardRequest writeHDCardRequest = new WriteHDCardRequest((byte) 0, 100, "HelloWorld");
+        IflytekWebSocketHelper.getInstance().sendMessage(writeHDCardRequest, new WebSocketCallback() {
+            @Override
+            public void onWebSocketCallback(Message message) {
+                if (message.getMessageID() == MessageDefine.ResponseCmd.WRITE_HD_CARD) {
+                    DefaultResponse res = (DefaultResponse) message;
+                    Log.e("MainActivity", "onWebSocketCallback hd_write_card: " + JSON.toJSONString(res));
+                    if (res.getResponseCode() > 0) {
+                        setInfoText("HD100读卡器写卡信息成功！");
+                    } else {
+                        setInfoText("HD100读卡器写卡信息失败！");
+                    }
+                }
+            }
+        });
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,12 +16,12 @@
             android:background="#4370b3"
             android:gravity="center"
             android:text="信息显示"
-            android:textColor="#cdda75"/>
+            android:textColor="#cdda75" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="工控机连接"/>
+            android:text="工控机连接" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,19 +32,19 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="connect"
-                android:text="连接WebSocket"/>
+                android:text="连接WebSocket" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="disconnect"
-                android:text="断开WebSocket"/>
+                android:text="断开WebSocket" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="高拍杆"/>
+            android:text="高拍杆" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,25 +55,25 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="high_beat_rod_switch"
-                android:text="高拍杆--开关"/>
+                android:text="高拍杆--开关" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="high_beat_rod_focus"
-                android:text="高拍杆--焦距"/>
+                android:text="高拍杆--焦距" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="high_beat_rod_snap"
-                android:text="高拍杆--抓拍"/>
+                android:text="高拍杆--抓拍" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="打印机"/>
+            android:text="打印机" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,19 +84,19 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="print_qr_code"
-                android:text="打印二维码"/>
+                android:text="打印二维码" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="print_file"
-                android:text="打印文件"/>
+                android:text="打印文件" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="发卡机"/>
+            android:text="发卡机" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,25 +107,25 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_status"
-                android:text="发卡机--获取设备状态"/>
+                android:text="发卡机--获取设备状态" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_front_read_card"
-                android:text="发卡机--从前端进卡并读卡"/>
+                android:text="发卡机--从前端进卡并读卡" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_back_read_card"
-                android:text="发卡机--从后端进卡并读卡"/>
+                android:text="发卡机--从后端进卡并读卡" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_reset"
-                android:text="发卡机--复位"/>
+                android:text="发卡机--复位" />
         </LinearLayout>
 
 
@@ -139,19 +138,50 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_location"
-                android:text="发卡机--移动卡位置"/>
+                android:text="发卡机--移动卡位置" />
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_read_card"
-                android:text="发卡机--读卡"/>
+                android:text="发卡机--读卡" />
+
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:onClick="hairpin_machine_sensor_status"
-                android:text="发卡机--传感器状态"/>
+                android:text="发卡机--传感器状态" />
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HD100读卡器" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hd_find_read_card"
+                android:text="HD100--寻卡并读取卡号" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hd_read_card"
+                android:text="HD100--读卡" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="hd_write_card"
+                android:text="HD100--写卡" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

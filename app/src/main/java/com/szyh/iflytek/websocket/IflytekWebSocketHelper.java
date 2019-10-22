@@ -5,12 +5,15 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.szyh.iflytek.bean.DefaultResponse;
 import com.szyh.iflytek.bean.ExtUploadResponse;
+import com.szyh.iflytek.bean.FindAndReadHDCardResponse;
 import com.szyh.iflytek.bean.HairpinMachineLocationResponse;
 import com.szyh.iflytek.bean.HairpinMachineReadCardResponse;
 import com.szyh.iflytek.bean.HairpinMachineSensorStatusResponse;
 import com.szyh.iflytek.bean.HairpinMachineStatusResponse;
 import com.szyh.iflytek.bean.HighBeatRodPhotoResponse;
 import com.szyh.iflytek.bean.Message;
+import com.szyh.iflytek.bean.ReadHDCardRequest;
+import com.szyh.iflytek.bean.ReadHDCardResponse;
 import com.szyh.iflytek.define.MessageDefine;
 
 import org.java_websocket.client.WebSocketClient;
@@ -175,6 +178,7 @@ public class IflytekWebSocketHelper {
                 case MessageDefine.ResponseCmd.HAIRPIN_MACHINE_RESET:
                 case MessageDefine.ResponseCmd.QR_CODE_PRINT:
                 case MessageDefine.ResponseCmd.FILE_PRINT:
+                case MessageDefine.ResponseCmd.WRITE_HD_CARD:
                     message = JSON.parseObject(result, DefaultResponse.class);
                     break;
                 case MessageDefine.ResponseCmd.HIGH_BEAT_ROD_SNAP:
@@ -208,6 +212,12 @@ public class IflytekWebSocketHelper {
                     for (ExtUploadListener extUploadListener : extUploadListeners) {
                         extUploadListener.onExtUpload(extUploadResponse.getExtUploadMsg());
                     }
+                    break;
+                case MessageDefine.ResponseCmd.FIND_READ_HD_CARD:
+                    message = JSON.parseObject(result, FindAndReadHDCardResponse.class);
+                    break;
+                case MessageDefine.ResponseCmd.READ_HD_CARD:
+                    message = JSON.parseObject(result, ReadHDCardResponse.class);
                     break;
             }
             if (message != null) {
