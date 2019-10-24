@@ -11,7 +11,7 @@ public class ReadHDCardRequest extends Message {
     public ReadHDCardRequest(byte startAddress, int count) {
         this.startAddress = startAddress;
         this.count = count;
-        setCmd(MessageDefine.RequestCmd.FIND_READ_HD_CARD);
+        setCmd(MessageDefine.RequestCmd.READ_HD_CARD);
     }
 
     public byte getStartAddress() {

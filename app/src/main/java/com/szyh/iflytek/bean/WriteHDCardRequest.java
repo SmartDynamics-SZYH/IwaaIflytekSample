@@ -17,6 +17,14 @@ public class WriteHDCardRequest extends Message {
         setCmd(MessageDefine.RequestCmd.WRITE_HD_CARD);
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public byte getStartAddress() {
         return startAddress;
     }
